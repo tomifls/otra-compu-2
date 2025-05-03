@@ -1,0 +1,124 @@
+paths:
+  /api/pets/:
+    get:
+      summary: Get all pets
+      tags:
+        - Pets
+      responses:
+        200:
+          description: A list of pets
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    description: The status of the response
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pets'
+        "404":
+          description: No users found
+        "500":
+          description: Internal Server Error
+    post:
+      summary: Create a new pet
+      tags:
+        - Pets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Max
+                specie:
+                  type: string
+                  example: Dog
+                bithDate:
+                  type: string
+                  format: date
+                  example: 2022-01-01
+      responses:
+        "201":
+          description: Pet created successfully
+          content:
+            application/json:
+              schema:
+                type: Object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    description: The status of the response
+                  payload:
+                    type: object
+                    $ref: '#/components/schemas/Pets'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+
+
+components:
+  schemas:
+    Pets:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The unique identifier for the pet
+        name:
+          type: string
+          description: The first name of the user
+        specie:
+          type: string
+          description: The specie of the pet (e.g., Dog, Cat, etc.)
+        bithDate:
+          type: string
+          format: date
+          description: The birth date of the pet
+        adopted:
+          type: boolean
+          description: Indicates if the pet has been adopted or not
+        image:
+          type: string
+          description: The URL of the pet's image
+        _v:
+          type: integer
+          description: The version of the user document in the database
+      example:
+        _id: 1234567890abcdef12345678
+        name: Fluffy
+        specie: Cat
+        bithDate: 2022-01-01
+        _v: 0
+    PetCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The first name of the user
+        specie:
+          type: string
+          description: The last name of the user
+        bithDate:
+          type: string
+          format: date
+          description: The email address of the user
+        _v:
+          type: integer
+          description: The password of the user
+      example:
+        name: Fluffy
+        specie: Cat
+        bithDate: 2022-01-01
+        "adopted": false,
+        "image": https://example.com/fluffy.jpg
+        _v: 0
